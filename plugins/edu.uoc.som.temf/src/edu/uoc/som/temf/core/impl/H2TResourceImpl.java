@@ -57,7 +57,7 @@ import edu.uoc.som.temf.tstores.TStore;
 import edu.uoc.som.temf.tstores.impl.IsSetCachingDelegatedTStoreImpl;
 import edu.uoc.som.temf.tstores.impl.SizeCachingDelegatedTStoreImpl;
 
-public class TResourceImpl extends ResourceImpl implements TResource {
+public class H2TResourceImpl extends ResourceImpl implements TResource {
 
 	protected static final ResourceContentsEStructuralFeature ROOT_CONTENTS_ESTRUCTURALFEATURE = new ResourceContentsEStructuralFeature();
 
@@ -69,11 +69,11 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 
 	protected Clock clock = TGlobalClock.INSTANCE;
 
-	public TResourceImpl(URI uri) {
+	public H2TResourceImpl(URI uri) {
 		this(uri, new MVStore.Builder().fileStore(new OffHeapStore()).open());
 	}
 
-	private TResourceImpl(URI uri, MVStore mvStore) {
+	private H2TResourceImpl(URI uri, MVStore mvStore) {
 		this.uri = uri;
 		this.mvStore = mvStore;
 		this.tStore = new MVStoreTStoreImpl(mvStore, this);
@@ -107,7 +107,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 
 			@Override
 			public Iterator<EObject> getChildren(Object object) {
-				return object == TResourceImpl.this ? TResourceImpl.this.getContentsAt(instant).iterator() : ((TObject) object).eContentsAt(instant).iterator();
+				return object == H2TResourceImpl.this ? H2TResourceImpl.this.getContentsAt(instant).iterator() : ((TObject) object).eContentsAt(instant).iterator();
 			}
 		};
 	}
@@ -186,7 +186,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 		mvStore.commit();
 	}
 
-	public static void shutdownWithoutUnload(TResourceImpl resource) {
+	public static void shutdownWithoutUnload(H2TResourceImpl resource) {
 		resource.shutdown();
 	}
 
@@ -227,7 +227,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 	 * @author agomez
 	 *
 	 */
-	static private class TResourceAtImpl extends TResourceImpl {
+	static private class TResourceAtImpl extends H2TResourceImpl {
 
 		private TResourceAtImpl(URI uri, MVStore mvStore, Instant instant) {
 			super(uri, mvStore);
@@ -309,7 +309,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 
 		@Override
 		public Object getNotifier() {
-			return TResourceImpl.this;
+			return H2TResourceImpl.this;
 		}
 
 		@Override
@@ -319,7 +319,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 
 		@Override
 		protected boolean isNotificationRequired() {
-			return TResourceImpl.this.eNotificationRequired();
+			return H2TResourceImpl.this.eNotificationRequired();
 		}
 
 		@Override
@@ -340,16 +340,16 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 		@Override
 		public NotificationChain inverseAdd(EObject object, NotificationChain notifications) {
 			InternalEObject eObject = (InternalEObject) object;
-			notifications = eObject.eSetResource(TResourceImpl.this, notifications);
-			TResourceImpl.this.attached(eObject);
+			notifications = eObject.eSetResource(H2TResourceImpl.this, notifications);
+			H2TResourceImpl.this.attached(eObject);
 			return notifications;
 		}
 
 		@Override
 		public NotificationChain inverseRemove(EObject object, NotificationChain notifications) {
 			InternalEObject eObject = (InternalEObject) object;
-			if (TResourceImpl.this.isLoaded || unloadingContents != null) {
-				TResourceImpl.this.detached(eObject);
+			if (H2TResourceImpl.this.isLoaded || unloadingContents != null) {
+				H2TResourceImpl.this.detached(eObject);
 			}
 			return eObject.eSetResource(null, notifications);
 		}
@@ -367,7 +367,7 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 			hardLinksList.add(object);
 			eObject.eAllContents().forEachRemaining(e -> hardLinksList.add(e));
 			// Iterate using the hard links list instead eAllContents
-			hardLinksList.forEach(e -> TObjectAdapterFactoryImpl.getAdapter(e, InternalTObject.class).tSetResource(TResourceImpl.this));
+			hardLinksList.forEach(e -> TObjectAdapterFactoryImpl.getAdapter(e, InternalTObject.class).tSetResource(H2TResourceImpl.this));
 			super.delegateAdd(index, object);
 		}
 
@@ -414,10 +414,10 @@ public class TResourceImpl extends ResourceImpl implements TResource {
 		}
 
 		protected void loaded() {
-			if (!TResourceImpl.this.isLoaded()) {
-				Notification notification = TResourceImpl.this.setLoaded(true);
+			if (!H2TResourceImpl.this.isLoaded()) {
+				Notification notification = H2TResourceImpl.this.setLoaded(true);
 				if (notification != null) {
-					TResourceImpl.this.eNotify(notification);
+					H2TResourceImpl.this.eNotify(notification);
 				}
 			}
 		}
