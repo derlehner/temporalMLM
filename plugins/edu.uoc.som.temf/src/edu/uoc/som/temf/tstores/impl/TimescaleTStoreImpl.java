@@ -127,136 +127,39 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	protected Object set(TObject object, EReference eReference, int index, TObject referencedObject) {
 		//updateContainment(object, eReference, referencedObject);
 		//updateInstanceOf(referencedObject);
-		return null;
+		throw new UnsupportedOperationException(); // TODO: this must be implemented once relations are supported
 	}
 
 	@Override
 	public boolean isSet(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return false;
+		return isSetAt(now(), object, feature);
+	}
+	
+	@Override
+	public boolean isSetAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
+		//TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
+		Object value = getAt(instant,  object,  feature, 0);
+		return value != null;
 	}
 
 	@Override
 	public void unset(InternalEObject object, EStructuralFeature feature) {
 		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 		
 	}
 
 	@Override
 	public boolean isEmpty(InternalEObject object, EStructuralFeature feature) {
 		
-		return false;
+		return get(object, feature, 0) != null;
 	}
 
 	@Override
 	public int size(InternalEObject object, EStructuralFeature feature) {
 		return sizeAt(now(), object, feature);
 	}
-
-	@Override
-	public boolean contains(InternalEObject object, EStructuralFeature feature, Object value) {
-		return false;
-	}
-
-	@Override
-	public int indexOf(InternalEObject object, EStructuralFeature feature, Object value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int lastIndexOf(InternalEObject object, EStructuralFeature feature, Object value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void add(InternalEObject object, EStructuralFeature feature, int index, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Object remove(InternalEObject object, EStructuralFeature feature, int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object move(InternalEObject object, EStructuralFeature feature, int targetIndex, int sourceIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void clear(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Object[] toArray(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(InternalEObject object, EStructuralFeature feature, T[] array) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int hashCode(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public InternalEObject getContainer(InternalEObject object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public EStructuralFeature getContainingFeature(InternalEObject object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public EObject create(EClass eClass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	@Override
-	public SortedMap<Instant, Object> getAllBetween(Instant startInstant, Instant endInstant, InternalEObject object,
-			EStructuralFeature feature, int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isSetAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Instant whenSet(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isEmptyAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public int sizeAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
 		int count = 0;
@@ -269,17 +172,142 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	        	count++;
 	        }
 			return count;
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 				e.printStackTrace();
-			}
+		}
 		return count;
 	}
+
+	@Override
+	public boolean contains(InternalEObject object, EStructuralFeature feature, Object value) {
+		try {
+			Statement stmt = this.con.createStatement();
+			String sql = "Select * from EAttribute where type = '" + object.getClass().getName() + "' and value = '" + value.toString() + "' and id = '" + feature.getName() + "';";
+	        ResultSet rs = stmt.executeQuery( sql );
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public EObject getEObject(String id) {
+		// TODO how to implement this???
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public boolean isEmptyAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public SortedMap<Instant, Object> getAllBetween(Instant startInstant, Instant endInstant, InternalEObject object,
+			EStructuralFeature feature, int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	@Override
 	public boolean containsAt(Instant instant, InternalEObject object, EStructuralFeature feature, Object value) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	// Unsupported Operations
+
+	@Override
+	public int indexOf(InternalEObject object, EStructuralFeature feature, Object value) {
+		// TODO: this must be implemented for multi-value attributes
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int lastIndexOf(InternalEObject object, EStructuralFeature feature, Object value) {
+		/// TODO: this must be implemented for multi-value attributes
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void add(InternalEObject object, EStructuralFeature feature, int index, Object value) {
+		// TODO: this must be implemented for multi-value attributes
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object remove(InternalEObject object, EStructuralFeature feature, int index) {
+		// TODO: this must be implemented for multi-value attributes
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object move(InternalEObject object, EStructuralFeature feature, int targetIndex, int sourceIndex) {
+		// TODO: this must be implemented for multi-value attributes
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clear(InternalEObject object, EStructuralFeature feature) {
+		// TODO this must be implemented when deleting values is allowed
+		throw new UnsupportedOperationException();
+		
+	}
+
+	@Override
+	public Object[] toArray(InternalEObject object, EStructuralFeature feature) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <T> T[] toArray(InternalEObject object, EStructuralFeature feature, T[] array) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int hashCode(InternalEObject object, EStructuralFeature feature) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public InternalEObject getContainer(InternalEObject object) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EStructuralFeature getContainingFeature(InternalEObject object) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EObject create(EClass eClass) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+
+
+	
+
+	
+
+	@Override
+	public Instant whenSet(InternalEObject object, EStructuralFeature feature) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	@Override
 	public int indexOfAt(Instant instant, InternalEObject object, EStructuralFeature feature, Object value) {
@@ -290,26 +318,26 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	@Override
 	public int lastIndexOfAt(Instant instant, InternalEObject object, EStructuralFeature feature, Object value) {
 		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Object[] toArrayAt(Instant instant, InternalEObject object, EStructuralFeature feature) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public <T> T[] toArrayAt(Instant instant, InternalEObject object, EStructuralFeature feature, T[] array) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public SortedMap<Instant, Object[]> toArrayAllBetween(Instant startInstant, Instant endInstant,
 			InternalEObject object, EStructuralFeature feature) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -321,20 +349,16 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	@Override
 	public InternalEObject getContainerAt(Instant instant, InternalEObject object) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public EStructuralFeature getContainingFeatureAt(Instant instant, InternalEObject object) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public EObject getEObject(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	private Instant now() {
 		if (resource != null) {
