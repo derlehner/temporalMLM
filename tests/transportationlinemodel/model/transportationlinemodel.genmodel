@@ -20,13 +20,13 @@
     <genClasses ecoreClass="transportationlinemodel.ecore#//System">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//System/area"/>
     </genClasses>
-    <genClasses ecoreClass="transportationlinemodel.ecore#//temporalItem">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//temporalItem/temporalLocation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute transportationlinemodel.ecore#//temporalItem/isProcessed"/>
-    </genClasses>
     <genClasses ecoreClass="transportationlinemodel.ecore#//Component">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//Component/hosts"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//Component/neighbours"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//Component/temporalHosts"/>
+    </genClasses>
+    <genClasses ecoreClass="transportationlinemodel.ecore#//Item">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute transportationlinemodel.ecore#//Item/isProcessed"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//Item/location"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

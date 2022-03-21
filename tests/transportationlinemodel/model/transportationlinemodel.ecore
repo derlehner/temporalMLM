@@ -8,7 +8,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Area">
     <eStructuralFeatures xsi:type="ecore:EReference" name="itemgenerator" lowerBound="1"
         eType="#//ItemGenerator" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="item" upperBound="-1" eType="#//temporalItem"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="item" upperBound="-1" eType="#//Item"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         upperBound="-1" eType="#//Component" containment="true"/>
@@ -17,15 +17,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="area" lowerBound="1" upperBound="-1"
         eType="#//Area" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="temporalItem">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="temporalLocation" eType="#//Component"
-        eOpposite="#//Component/temporalHosts"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProcessed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hosts" eType="#//Item"
+        eOpposite="#//Item/location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="neighbours" upperBound="-1"
         eType="#//Component"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="temporalHosts" eType="#//temporalItem"
-        eOpposite="#//temporalItem/temporalLocation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Item">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProcessed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="location" eType="#//Component"
+        eOpposite="#//Component/hosts"/>
   </eClassifiers>
 </ecore:EPackage>
