@@ -1,5 +1,10 @@
+# Open PGAdmin
 
-#SETUP 
+docker exec -it timescaledb psql -U postgres
+-> \c example
+-> create database: create database example;
+
+# SETUP 
 create table TObjects(id TEXT, t timestamp)
 
 Create Table EAttribute(id TEXT, type TEXT, t timestamp, value TEXT);

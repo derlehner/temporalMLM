@@ -75,7 +75,22 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	
 	protected Object getAt(Instant instant, TObject object, EReference eReference, int index) {
-		return null;
+		System.out.println("GetAt Method for eReference called");
+		/*try {
+		Statement stmt = this.con.createStatement();
+        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "');";
+        
+        ResultSet rs = stmt.executeQuery( sql );
+		rs.next();
+		String value = rs.getString("value");
+        rs.close();
+        stmt.close();
+        
+        return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		return object; 
 	}
 
 	@Override
@@ -144,8 +159,14 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	@Override
 	public void unset(InternalEObject object, EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Delete from EAttribute where id = '" + feature.getName() + "' and type = '" + object.getClass().getName() + "');";
+	        stmt.execute(sql);
+	
+		} catch (SQLException e) {
+				e.printStackTrace();
+		}
 		
 	}
 
@@ -195,6 +216,13 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	@Override
 	public EObject getEObject(String id) {
 		// TODO how to implement this???
+		/*public EObject getEObject(String id) {
+			if (id == null) {
+				return null;
+			}
+			TObject tObject = loadedEObjects.getUnchecked(id);
+			return tObject;
+		}*/
 		throw new UnsupportedOperationException();
 	}
 	
@@ -236,9 +264,18 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	@Override
 	public void add(InternalEObject object, EStructuralFeature feature, int index, Object value) {
-		// TODO: this must be implemented for multi-value attributes
-		throw new UnsupportedOperationException();
+		TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
+		if (feature instanceof EAttribute) {
+			//add(tObject, (EAttribute) feature, index, value);
+		} else if (feature instanceof EReference) {
+			TObject referencedEObject = TObjectAdapterFactoryImpl.getAdapter(value, TObject.class);
+			//add(tObject, (EReference) feature, index, referencedEObject);
+		} else {
+			throw new IllegalArgumentException(feature.toString());
+		}
+		// throw new UnsupportedOperationException();
 	}
+
 
 	@Override
 	public Object remove(InternalEObject object, EStructuralFeature feature, int index) {

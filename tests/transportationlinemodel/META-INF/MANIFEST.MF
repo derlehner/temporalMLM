@@ -1,7 +1,20 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: transportationlinemodel
-Bundle-SymbolicName: transportationlinemodel; singleton:=true
+Bundle-Name: %pluginName
+Bundle-SymbolicName: transportationlinemodel;singleton:=true
+Automatic-Module-Name: transportationlinemodel
 Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: transportationlinemodel.TransportationLinePlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: transportationlinemodel,
+ transportationlinemodel.impl,
+ transportationlinemodel.util
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.core.runtime
+ edu.uoc.som.temf;visibility:=reexport,
+ org.eclipse.core.runtime,
+ org.junit,
+ org.junit.jupiter.api
+Bundle-ActivationPolicy: lazy
