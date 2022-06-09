@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated transportationlinemodel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="transportationlinemodel.presentation.TransportationlinemodelModelWizardID"
+            name="%_UI_TransportationlinemodelModelWizard_label"
+            class="transportationlinemodel.presentation.TransportationlinemodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/TransportationlinemodelModelFile.gif">
+         <description>%_UI_TransportationlinemodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated transportationlinemodel -->
+      <editor
+            id="transportationlinemodel.presentation.TransportationlinemodelEditorID"
+            name="%_UI_TransportationlinemodelEditor_label"
+            icon="icons/full/obj16/TransportationlinemodelModelFile.gif"
+            extensions="transportationlinemodel"
+            class="transportationlinemodel.presentation.TransportationlinemodelEditor"
+            contributorClass="transportationlinemodel.presentation.TransportationlinemodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

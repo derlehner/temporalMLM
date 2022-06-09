@@ -22,7 +22,7 @@ public class TResourceFactoryImpl implements TResourceFactory {
 	@Override
 	public Resource createResource(URI uri) {
 		if (StringUtils.equals(TURI.TEMF_MAP_SCHEME, uri.scheme())) {
-			return new TimescaleTResourceImpl(uri);
+			return new H2TResourceImpl(uri);
 		} else {
 			return null;
 		}
