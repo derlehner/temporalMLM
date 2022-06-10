@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated multilevelmodel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="multilevelmodel.presentation.MultilevelmodelModelWizardID"
+            name="%_UI_MultilevelmodelModelWizard_label"
+            class="multilevelmodel.presentation.MultilevelmodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/MultilevelmodelModelFile.gif">
+         <description>%_UI_MultilevelmodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated multilevelmodel -->
+      <editor
+            id="multilevelmodel.presentation.MultilevelmodelEditorID"
+            name="%_UI_MultilevelmodelEditor_label"
+            icon="icons/full/obj16/MultilevelmodelModelFile.gif"
+            extensions="multilevelmodel"
+            class="multilevelmodel.presentation.MultilevelmodelEditor"
+            contributorClass="multilevelmodel.presentation.MultilevelmodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

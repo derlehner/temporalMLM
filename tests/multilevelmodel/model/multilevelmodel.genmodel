@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/multilevelmodel/src-gen" creationIcons="false"
+    editDirectory="/multilevelmodel.edit/src-gen" editorDirectory="/multilevelmodel.editor/src-gen"
+    modelPluginID="multilevelmodel" modelName="Multilevelmodel" modelPluginClass="MultiLevelPlugin"
+    rootExtendsInterface="edu.uoc.som.temf.core.TObject" rootExtendsClass="edu.uoc.som.temf.core.impl.TObjectImpl"
+    reflectiveDelegation="true" codeFormatting="true" importerID="org.eclipse.emf.importer.ecore"
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" operationReflection="true"
+    importOrganizing="true">
+  <foreignModel>multilevelmodel.ecore</foreignModel>
+  <modelPluginVariables>TEMF=edu.uoc.som.temf</modelPluginVariables>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Multilevelmodel" disposableProviderFactory="true" ecorePackage="multilevelmodel.ecore#/">
+    <genClasses ecoreClass="multilevelmodel.ecore#//Clabject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multilevelmodel.ecore#//Clabject/slot"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multilevelmodel.ecore#//Clabject/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multilevelmodel.ecore#//Clabject/name"/>
+    </genClasses>
+    <genClasses ecoreClass="multilevelmodel.ecore#//Slot">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multilevelmodel.ecore#//Slot/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multilevelmodel.ecore#//Slot/name"/>
+    </genClasses>
+    <genClasses ecoreClass="multilevelmodel.ecore#//Model">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multilevelmodel.ecore#//Model/clabject"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
