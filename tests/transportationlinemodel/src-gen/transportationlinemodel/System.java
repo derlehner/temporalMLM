@@ -2,8 +2,6 @@
  */
 package transportationlinemodel;
 
-import edu.uoc.som.temf.core.TObject;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -20,10 +18,9 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see transportationlinemodel.TransportationlinemodelPackage#getSystem()
  * @model
- * @extends TObject
  * @generated
  */
-public interface System extends TObject {
+public interface System extends NamedElement {
 	/**
 	 * Returns the value of the '<em><b>Area</b></em>' containment reference list.
 	 * The list contents are of type {@link transportationlinemodel.Area}.

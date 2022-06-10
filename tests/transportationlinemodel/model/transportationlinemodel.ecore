@@ -2,10 +2,10 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="transportationlinemodel" nsURI="http://www.example.org/transportationlinemodel"
     nsPrefix="transportationlinemodel">
-  <eClassifiers xsi:type="ecore:EClass" name="ItemGenerator">
+  <eClassifiers xsi:type="ecore:EClass" name="ItemGenerator" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Area">
+  <eClassifiers xsi:type="ecore:EClass" name="Area" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="itemgenerator" lowerBound="1"
         eType="#//ItemGenerator" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="item" upperBound="-1" eType="#//Item"
@@ -13,19 +13,22 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         upperBound="-1" eType="#//Component" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="System">
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="area" lowerBound="1" upperBound="-1"
         eType="#//Area" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Component">
+  <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="hosts" eType="#//Item"
         eOpposite="#//Item/location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="neighbours" upperBound="-1"
         eType="#//Component"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Item">
+  <eClassifiers xsi:type="ecore:EClass" name="Item" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProcessed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="location" eType="#//Component"
         eOpposite="#//Component/hosts"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

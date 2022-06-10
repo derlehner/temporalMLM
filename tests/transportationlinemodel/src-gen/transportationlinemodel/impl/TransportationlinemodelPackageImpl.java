@@ -13,6 +13,7 @@ import transportationlinemodel.Area;
 import transportationlinemodel.Component;
 import transportationlinemodel.Item;
 import transportationlinemodel.ItemGenerator;
+import transportationlinemodel.NamedElement;
 import transportationlinemodel.TransportationlinemodelFactory;
 import transportationlinemodel.TransportationlinemodelPackage;
 
@@ -57,6 +58,13 @@ public class TransportationlinemodelPackageImpl extends EPackageImpl implements 
 	 * @generated
 	 */
 	private EClass itemEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass namedElementEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -254,6 +262,24 @@ public class TransportationlinemodelPackageImpl extends EPackageImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getNamedElement() {
+		return namedElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNamedElement_Name() {
+		return (EAttribute) namedElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TransportationlinemodelFactory getTransportationlinemodelFactory() {
 		return (TransportationlinemodelFactory) getEFactoryInstance();
 	}
@@ -296,6 +322,9 @@ public class TransportationlinemodelPackageImpl extends EPackageImpl implements 
 		itemEClass = createEClass(ITEM);
 		createEAttribute(itemEClass, ITEM__IS_PROCESSED);
 		createEReference(itemEClass, ITEM__LOCATION);
+
+		namedElementEClass = createEClass(NAMED_ELEMENT);
+		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 	}
 
 	/**
@@ -327,6 +356,11 @@ public class TransportationlinemodelPackageImpl extends EPackageImpl implements 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		itemGeneratorEClass.getESuperTypes().add(this.getNamedElement());
+		areaEClass.getESuperTypes().add(this.getNamedElement());
+		systemEClass.getESuperTypes().add(this.getNamedElement());
+		componentEClass.getESuperTypes().add(this.getNamedElement());
+		itemEClass.getESuperTypes().add(this.getNamedElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(itemGeneratorEClass, ItemGenerator.class, "ItemGenerator", !IS_ABSTRACT, !IS_INTERFACE,
@@ -367,6 +401,11 @@ public class TransportationlinemodelPackageImpl extends EPackageImpl implements 
 		initEReference(getItem_Location(), this.getComponent(), this.getComponent_Hosts(), "location", null, 0, 1,
 				Item.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedElement.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

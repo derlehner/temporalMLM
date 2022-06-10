@@ -2,8 +2,6 @@
  */
 package transportationlinemodel.impl;
 
-import edu.uoc.som.temf.core.impl.TObjectImpl;
-
 import org.eclipse.emf.ecore.EClass;
 
 import transportationlinemodel.ItemGenerator;
@@ -22,7 +20,7 @@ import transportationlinemodel.TransportationlinemodelPackage;
  *
  * @generated
  */
-public class ItemGeneratorImpl extends TObjectImpl implements ItemGenerator {
+public class ItemGeneratorImpl extends NamedElementImpl implements ItemGenerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -40,16 +38,6 @@ public class ItemGeneratorImpl extends TObjectImpl implements ItemGenerator {
 	@Override
 	protected EClass eStaticClass() {
 		return TransportationlinemodelPackage.Literals.ITEM_GENERATOR;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

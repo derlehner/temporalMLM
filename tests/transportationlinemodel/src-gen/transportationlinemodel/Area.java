@@ -2,8 +2,6 @@
  */
 package transportationlinemodel;
 
-import edu.uoc.som.temf.core.TObject;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -22,10 +20,9 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see transportationlinemodel.TransportationlinemodelPackage#getArea()
  * @model
- * @extends TObject
  * @generated
  */
-public interface Area extends TObject {
+public interface Area extends NamedElement {
 	/**
 	 * Returns the value of the '<em><b>Itemgenerator</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

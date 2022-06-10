@@ -57,6 +57,43 @@ public interface TransportationlinemodelPackage extends EPackage {
 	TransportationlinemodelPackage eINSTANCE = transportationlinemodel.impl.TransportationlinemodelPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link transportationlinemodel.impl.NamedElementImpl <em>Named Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see transportationlinemodel.impl.NamedElementImpl
+	 * @see transportationlinemodel.impl.TransportationlinemodelPackageImpl#getNamedElement()
+	 * @generated
+	 */
+	int NAMED_ELEMENT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__NAME = 0;
+
+	/**
+	 * The number of structural features of the '<em>Named Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Named Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link transportationlinemodel.impl.ItemGeneratorImpl <em>Item Generator</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,13 +104,22 @@ public interface TransportationlinemodelPackage extends EPackage {
 	int ITEM_GENERATOR = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITEM_GENERATOR__NAME = NAMED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Frequency</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM_GENERATOR__FREQUENCY = 0;
+	int ITEM_GENERATOR__FREQUENCY = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Item Generator</em>' class.
@@ -82,7 +128,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM_GENERATOR_FEATURE_COUNT = 1;
+	int ITEM_GENERATOR_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Item Generator</em>' class.
@@ -91,7 +137,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM_GENERATOR_OPERATION_COUNT = 0;
+	int ITEM_GENERATOR_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link transportationlinemodel.impl.AreaImpl <em>Area</em>}' class.
@@ -104,13 +150,22 @@ public interface TransportationlinemodelPackage extends EPackage {
 	int AREA = 1;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AREA__NAME = NAMED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Itemgenerator</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AREA__ITEMGENERATOR = 0;
+	int AREA__ITEMGENERATOR = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Item</b></em>' containment reference list.
@@ -119,7 +174,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AREA__ITEM = 1;
+	int AREA__ITEM = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Component</b></em>' containment reference list.
@@ -128,7 +183,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AREA__COMPONENT = 2;
+	int AREA__COMPONENT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Area</em>' class.
@@ -137,7 +192,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AREA_FEATURE_COUNT = 3;
+	int AREA_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Area</em>' class.
@@ -146,7 +201,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AREA_OPERATION_COUNT = 0;
+	int AREA_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link transportationlinemodel.impl.SystemImpl <em>System</em>}' class.
@@ -159,13 +214,22 @@ public interface TransportationlinemodelPackage extends EPackage {
 	int SYSTEM = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYSTEM__NAME = NAMED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Area</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYSTEM__AREA = 0;
+	int SYSTEM__AREA = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>System</em>' class.
@@ -174,7 +238,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SYSTEM_FEATURE_COUNT = 1;
+	int SYSTEM_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>System</em>' class.
@@ -183,7 +247,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SYSTEM_OPERATION_COUNT = 0;
+	int SYSTEM_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link transportationlinemodel.impl.ComponentImpl <em>Component</em>}' class.
@@ -196,13 +260,22 @@ public interface TransportationlinemodelPackage extends EPackage {
 	int COMPONENT = 3;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT__NAME = NAMED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Hosts</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__HOSTS = 0;
+	int COMPONENT__HOSTS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Neighbours</b></em>' reference list.
@@ -211,7 +284,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__NEIGHBOURS = 1;
+	int COMPONENT__NEIGHBOURS = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Component</em>' class.
@@ -220,7 +293,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = 2;
+	int COMPONENT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Component</em>' class.
@@ -229,7 +302,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_OPERATION_COUNT = 0;
+	int COMPONENT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link transportationlinemodel.impl.ItemImpl <em>Item</em>}' class.
@@ -242,13 +315,22 @@ public interface TransportationlinemodelPackage extends EPackage {
 	int ITEM = 4;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITEM__NAME = NAMED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Is Processed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM__IS_PROCESSED = 0;
+	int ITEM__IS_PROCESSED = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' reference.
@@ -257,7 +339,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM__LOCATION = 1;
+	int ITEM__LOCATION = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Item</em>' class.
@@ -266,7 +348,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM_FEATURE_COUNT = 2;
+	int ITEM_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Item</em>' class.
@@ -275,7 +357,7 @@ public interface TransportationlinemodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITEM_OPERATION_COUNT = 0;
+	int ITEM_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link transportationlinemodel.ItemGenerator <em>Item Generator</em>}'.
@@ -427,6 +509,27 @@ public interface TransportationlinemodelPackage extends EPackage {
 	EReference getItem_Location();
 
 	/**
+	 * Returns the meta object for class '{@link transportationlinemodel.NamedElement <em>Named Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Named Element</em>'.
+	 * @see transportationlinemodel.NamedElement
+	 * @generated
+	 */
+	EClass getNamedElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link transportationlinemodel.NamedElement#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see transportationlinemodel.NamedElement#getName()
+	 * @see #getNamedElement()
+	 * @generated
+	 */
+	EAttribute getNamedElement_Name();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -570,6 +673,24 @@ public interface TransportationlinemodelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ITEM__LOCATION = eINSTANCE.getItem_Location();
+
+		/**
+		 * The meta object literal for the '{@link transportationlinemodel.impl.NamedElementImpl <em>Named Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see transportationlinemodel.impl.NamedElementImpl
+		 * @see transportationlinemodel.impl.TransportationlinemodelPackageImpl#getNamedElement()
+		 * @generated
+		 */
+		EClass NAMED_ELEMENT = eINSTANCE.getNamedElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
 
 	}
 

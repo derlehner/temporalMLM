@@ -2,8 +2,6 @@
  */
 package transportationlinemodel;
 
-import edu.uoc.som.temf.core.TObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Item</b></em>'.
@@ -19,10 +17,9 @@ import edu.uoc.som.temf.core.TObject;
  *
  * @see transportationlinemodel.TransportationlinemodelPackage#getItem()
  * @model
- * @extends TObject
  * @generated
  */
-public interface Item extends TObject {
+public interface Item extends NamedElement {
 	/**
 	 * Returns the value of the '<em><b>Is Processed</b></em>' attribute.
 	 * <!-- begin-user-doc -->

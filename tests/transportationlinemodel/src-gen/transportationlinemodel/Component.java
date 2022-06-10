@@ -2,8 +2,6 @@
  */
 package transportationlinemodel;
 
-import edu.uoc.som.temf.core.TObject;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -21,10 +19,9 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see transportationlinemodel.TransportationlinemodelPackage#getComponent()
  * @model
- * @extends TObject
  * @generated
  */
-public interface Component extends TObject {
+public interface Component extends NamedElement {
 	/**
 	 * Returns the value of the '<em><b>Hosts</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link transportationlinemodel.Item#getLocation <em>Location</em>}'.

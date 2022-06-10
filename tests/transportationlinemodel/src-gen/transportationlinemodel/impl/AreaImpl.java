@@ -2,8 +2,6 @@
  */
 package transportationlinemodel.impl;
 
-import edu.uoc.som.temf.core.impl.TObjectImpl;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -29,7 +27,7 @@ import transportationlinemodel.TransportationlinemodelPackage;
  *
  * @generated
  */
-public class AreaImpl extends TObjectImpl implements Area {
+public class AreaImpl extends NamedElementImpl implements Area {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47,16 +45,6 @@ public class AreaImpl extends TObjectImpl implements Area {
 	@Override
 	protected EClass eStaticClass() {
 		return TransportationlinemodelPackage.Literals.AREA;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

@@ -2,8 +2,6 @@
  */
 package transportationlinemodel;
 
-import edu.uoc.som.temf.core.TObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Item Generator</b></em>'.
@@ -18,10 +16,9 @@ import edu.uoc.som.temf.core.TObject;
  *
  * @see transportationlinemodel.TransportationlinemodelPackage#getItemGenerator()
  * @model
- * @extends TObject
  * @generated
  */
-public interface ItemGenerator extends TObject {
+public interface ItemGenerator extends NamedElement {
 	/**
 	 * Returns the value of the '<em><b>Frequency</b></em>' attribute.
 	 * <!-- begin-user-doc -->

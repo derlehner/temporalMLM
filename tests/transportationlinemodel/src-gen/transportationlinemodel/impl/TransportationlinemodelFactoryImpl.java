@@ -14,6 +14,7 @@ import transportationlinemodel.Area;
 import transportationlinemodel.Component;
 import transportationlinemodel.Item;
 import transportationlinemodel.ItemGenerator;
+import transportationlinemodel.NamedElement;
 import transportationlinemodel.TransportationlinemodelFactory;
 import transportationlinemodel.TransportationlinemodelPackage;
 
@@ -71,6 +72,8 @@ public class TransportationlinemodelFactoryImpl extends EFactoryImpl implements 
 			return (EObject) createComponent();
 		case TransportationlinemodelPackage.ITEM:
 			return (EObject) createItem();
+		case TransportationlinemodelPackage.NAMED_ELEMENT:
+			return (EObject) createNamedElement();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -124,6 +127,16 @@ public class TransportationlinemodelFactoryImpl extends EFactoryImpl implements 
 	public Item createItem() {
 		ItemImpl item = new ItemImpl();
 		return item;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NamedElement createNamedElement() {
+		NamedElementImpl namedElement = new NamedElementImpl();
+		return namedElement;
 	}
 
 	/**

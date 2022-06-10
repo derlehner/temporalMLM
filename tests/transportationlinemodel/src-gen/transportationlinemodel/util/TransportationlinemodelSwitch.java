@@ -11,6 +11,7 @@ import transportationlinemodel.Area;
 import transportationlinemodel.Component;
 import transportationlinemodel.Item;
 import transportationlinemodel.ItemGenerator;
+import transportationlinemodel.NamedElement;
 import transportationlinemodel.TransportationlinemodelPackage;
 
 /**
@@ -74,12 +75,16 @@ public class TransportationlinemodelSwitch<T> extends Switch<T> {
 			ItemGenerator itemGenerator = (ItemGenerator) theEObject;
 			T result = caseItemGenerator(itemGenerator);
 			if (result == null)
+				result = caseNamedElement(itemGenerator);
+			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case TransportationlinemodelPackage.AREA: {
 			Area area = (Area) theEObject;
 			T result = caseArea(area);
+			if (result == null)
+				result = caseNamedElement(area);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -88,6 +93,8 @@ public class TransportationlinemodelSwitch<T> extends Switch<T> {
 			transportationlinemodel.System system = (transportationlinemodel.System) theEObject;
 			T result = caseSystem(system);
 			if (result == null)
+				result = caseNamedElement(system);
+			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
@@ -95,12 +102,23 @@ public class TransportationlinemodelSwitch<T> extends Switch<T> {
 			Component component = (Component) theEObject;
 			T result = caseComponent(component);
 			if (result == null)
+				result = caseNamedElement(component);
+			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case TransportationlinemodelPackage.ITEM: {
 			Item item = (Item) theEObject;
 			T result = caseItem(item);
+			if (result == null)
+				result = caseNamedElement(item);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case TransportationlinemodelPackage.NAMED_ELEMENT: {
+			NamedElement namedElement = (NamedElement) theEObject;
+			T result = caseNamedElement(namedElement);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -182,6 +200,21 @@ public class TransportationlinemodelSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseItem(Item object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNamedElement(NamedElement object) {
 		return null;
 	}
 

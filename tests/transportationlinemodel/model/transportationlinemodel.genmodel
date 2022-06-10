@@ -31,5 +31,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute transportationlinemodel.ecore#//Item/isProcessed"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference transportationlinemodel.ecore#//Item/location"/>
     </genClasses>
+    <genClasses ecoreClass="transportationlinemodel.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute transportationlinemodel.ecore#//NamedElement/name"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

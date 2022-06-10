@@ -2,8 +2,6 @@
  */
 package transportationlinemodel.impl;
 
-import edu.uoc.som.temf.core.impl.TObjectImpl;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -24,7 +22,7 @@ import transportationlinemodel.TransportationlinemodelPackage;
  *
  * @generated
  */
-public class SystemImpl extends TObjectImpl implements transportationlinemodel.System {
+public class SystemImpl extends NamedElementImpl implements transportationlinemodel.System {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -42,16 +40,6 @@ public class SystemImpl extends TObjectImpl implements transportationlinemodel.S
 	@Override
 	protected EClass eStaticClass() {
 		return TransportationlinemodelPackage.Literals.SYSTEM;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

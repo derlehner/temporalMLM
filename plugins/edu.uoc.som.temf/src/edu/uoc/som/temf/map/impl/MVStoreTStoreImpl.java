@@ -544,6 +544,7 @@ public class MVStoreTStoreImpl implements SearcheableTStore {
 	}
 
 	protected static Object parseMapValue(EAttribute eAttribute, Object property) {
+		System.out.println(property);
 		return property != null ? EcoreUtil.createFromString(eAttribute.getEAttributeType(), property.toString()) : null;
 	}
 
@@ -581,11 +582,16 @@ public class MVStoreTStoreImpl implements SearcheableTStore {
 
 	protected TreeMap<Instant, Object> getAllFromDataMap(Instant startInstant, Instant endInstant, TObject object, EStructuralFeature feature) {
 		TreeMap<Instant, Object> result = new TreeMap<>();
-		DataKey firstKey = dataMap.ceilingKey(DataKey.from(object.tId(), feature.getName(), startInstant));
+		System.out.println(feature.getName());
+		DataKey firstKey = dataMap.ceilingKey(DataKey.from(object.tId(), feature.getName(), startInstant));	// TODO: here's the error: feature.getName = isProcessed, but firstKey.feature = name
+		System.out.println(firstKey.feature);
 		DataKey lastKey = dataMap.floorKey(DataKey.from(object.tId(), feature.getName(), endInstant));
 		Cursor<DataKey, Object> c = dataMap.cursor(firstKey);
 		while (c.hasNext()) {
 			c.next();
+			if(c.getKey().feature.equals(feature.getName())){
+				System.out.println("found value for " + feature.getName() + "in object " + object.getClass().getName() + ": " + c.getValue());
+			}
 			result.put(c.getKey().instant, c.getValue());
 			if (c.getKey().equals(lastKey)) {
 				break;

@@ -7,18 +7,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import transportationlinemodel.TransportationlinemodelFactory;
@@ -30,8 +20,7 @@ import transportationlinemodel.TransportationlinemodelPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SystemItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-		IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class SystemItemProvider extends NamedElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -116,7 +105,9 @@ public class SystemItemProvider extends ItemProviderAdapter implements IEditingD
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_System_type");
+		String label = ((transportationlinemodel.System) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_System_type")
+				: getString("_UI_System_type") + " " + label;
 	}
 
 	/**
@@ -151,17 +142,6 @@ public class SystemItemProvider extends ItemProviderAdapter implements IEditingD
 
 		newChildDescriptors.add(createChildParameter(TransportationlinemodelPackage.Literals.SYSTEM__AREA,
 				TransportationlinemodelFactory.eINSTANCE.createArea()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return TransportationlinemodelEditPlugin.INSTANCE;
 	}
 
 }

@@ -188,6 +188,29 @@ public class TransportationlinemodelItemProviderAdapterFactory extends Transport
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link transportationlinemodel.NamedElement} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NamedElementItemProvider namedElementItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link transportationlinemodel.NamedElement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNamedElementAdapter() {
+		if (namedElementItemProvider == null) {
+			namedElementItemProvider = new NamedElementItemProvider(this);
+		}
+
+		return namedElementItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -296,6 +319,8 @@ public class TransportationlinemodelItemProviderAdapterFactory extends Transport
 			componentItemProvider.dispose();
 		if (itemItemProvider != null)
 			itemItemProvider.dispose();
+		if (namedElementItemProvider != null)
+			namedElementItemProvider.dispose();
 	}
 
 }
