@@ -5,11 +5,12 @@ docker exec -it timescaledb psql -U postgres
 -> create database: create database example;
 
 # SETUP 
-create table TObjects(id TEXT, t timestamp);
+create table EObject(id TEXT, type TEXT);
 
 Create Table EAttribute(id TEXT, type TEXT, t timestamp, value TEXT);
 
 Create Table EReference(id TEXT, sourceType TEXT, targetType TEXT, t timestamp, value TEXT);
+
 
 # SET
 
@@ -19,20 +20,29 @@ Insert Into EAttribute(id, type, t, value)
 VALUES 
 ('isProcessed', 'item1', '2021-01-01 09:00:00.000', 'true');
 
-Delete From EAttribute;
-
 Insert into EReference(id, sourceType, targetType, t, value)
 VALUES
 ('eContents', 'ROOT', 'Item' , '2021-01-01 09:00:00.000', 'item1');
-Delete From EReference;
 
-Select * from EReference where sourceType = 'ROOT' and id='eContents';
+Insert into EObject(id, type)
+VALUES
+('item1', 'Item');
+
+# Clean
+Delete From EAttribute;
+Delete from EReference;
+Delete From EObject;
+
 
 ## GET
 
 Select * from EAttribute where t <= '2022-01-27 15:02:55.339676' and t >= (select max(t) from EAttribute where t <= '2022-01-27 15:02:55.339676');
 
 Select * from EAttribute where type = '' and value = '' and id = '';
+
+Select * from EReference where sourceType = 'ROOT' and id='eContents';
+
+Select * from EObject where id = '';
 
 # rqs
 

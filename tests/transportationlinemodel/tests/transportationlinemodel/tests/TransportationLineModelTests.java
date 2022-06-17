@@ -78,18 +78,17 @@ class TransportationLineModelTests {
 	@BeforeAll
 	static void beforeAllTest() throws IOException{
 		// Prepare TemporalEMF
-			File resourceFile = File.createTempFile("temf-", null);
-			resourceFile.delete();
-			resourceFile.deleteOnExit();
-			//res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
-			res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
-			
-			// Prepare model factory
-			/*modelFactory = TransportationlinemodelFactory.eINSTANCE;
-			i1 = modelFactory.createItem();
-			i1.setName(expectedItemName);
-			System.out.println(i1.eClass().getEPackage());
-			res.getContents().add(i1);*/
+		File resourceFile = File.createTempFile("temf-", null);
+		resourceFile.delete();
+		resourceFile.deleteOnExit();
+		//res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+		
+		// Prepare model factory
+		modelFactory = TransportationlinemodelFactory.eINSTANCE;
+		i1 = modelFactory.createItem();
+		i1.setName(expectedItemName);
+		res.getContents().add(i1);
 			
 	}
 
@@ -115,7 +114,7 @@ class TransportationLineModelTests {
 	@Test
 	void testIsProcessed_CorrectlyStored() throws IOException {
 		// Arrange
-		//i1.setIsProcessed(false);
+		i1.setIsProcessed(true);
 		
 		// Act
 		/*transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
