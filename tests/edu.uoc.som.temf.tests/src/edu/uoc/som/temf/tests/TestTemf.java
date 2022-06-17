@@ -39,7 +39,7 @@ class TestTemf {
 	@Order(0)
 	void testTResourceFactory() {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource resource = resourceSet.createResource(TURI.createTMapURI(new File(UUID.randomUUID().toString())));
+		Resource resource = resourceSet.createResource(TURI.createTMapURI(new File(UUID.randomUUID().toString()), "keyvalue"));
 
 		assertTrue(resource instanceof TResource, "Check that the TResourceFactory is correctly registered");
 	}

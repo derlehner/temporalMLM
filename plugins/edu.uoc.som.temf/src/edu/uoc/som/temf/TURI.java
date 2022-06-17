@@ -21,6 +21,7 @@ public class TURI extends URI {
 	private static final String FILE_SCHEME = "file";
 	
 	public static final String TEMF_MAP_SCHEME = "temf-map";
+	public static final String TEMF_TIMESCALE_SCHEME = "temf-timescale";
 
 	protected URI internalUri;
 	
@@ -37,15 +38,27 @@ public class TURI extends URI {
 		}
 	}
 	
-	public static URI createTMapURI(File file) {
+	public static URI createTMapURI(File file, String option) {
 		URI fileUri = URI.createFileURI(file.getAbsolutePath());
-		URI uri = URI.createHierarchicalURI(
-				TURI.TEMF_MAP_SCHEME, 
-				fileUri.authority(),
-				fileUri.device(),
-				fileUri.segments(),
-				fileUri.query(),
-				fileUri.fragment());
+		URI uri = null;
+		if(option.equals("keyvalue")){
+			uri = URI.createHierarchicalURI(
+					TURI.TEMF_MAP_SCHEME, 
+					fileUri.authority(),
+					fileUri.device(),
+					fileUri.segments(),
+					fileUri.query(),
+					fileUri.fragment());
+		}else if(option.equals("timescale")) {
+			uri = URI.createHierarchicalURI(
+					TURI.TEMF_TIMESCALE_SCHEME, 
+					fileUri.authority(),
+					fileUri.device(),
+					fileUri.segments(),
+					fileUri.query(),
+					fileUri.fragment());
+		}
+				
 		return new TURI(uri.hashCode(), uri);
 	}
 	

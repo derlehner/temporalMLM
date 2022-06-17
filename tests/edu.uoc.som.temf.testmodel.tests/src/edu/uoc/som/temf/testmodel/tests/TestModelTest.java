@@ -27,7 +27,7 @@ public class TestModelTest {
 		File resourceFile = File.createTempFile("temf-", null);
 		resourceFile.delete();
 		resourceFile.deleteOnExit();
-		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile));
+		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "timescale"));
 		
 		modelFactory = TestmodelFactory.eINSTANCE;
 		

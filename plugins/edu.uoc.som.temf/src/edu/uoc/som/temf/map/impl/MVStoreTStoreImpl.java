@@ -509,7 +509,7 @@ public class MVStoreTStoreImpl implements SearcheableTStore {
 		if (id == null) {
 			return null;
 		}
-		TObject tObject = loadedEObjects.getUnchecked(id);
+		TObject tObject = loadedEObjects.getUnchecked(id);	// TODO: what is stored in loadedEObjects??
 		return tObject;
 	}
 

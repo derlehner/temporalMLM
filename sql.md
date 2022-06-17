@@ -5,11 +5,11 @@ docker exec -it timescaledb psql -U postgres
 -> create database: create database example;
 
 # SETUP 
-create table TObjects(id TEXT, t timestamp)
+create table TObjects(id TEXT, t timestamp);
 
 Create Table EAttribute(id TEXT, type TEXT, t timestamp, value TEXT);
 
-
+Create Table EReference(id TEXT, sourceType TEXT, targetType TEXT, t timestamp, value TEXT);
 
 # SET
 
@@ -17,9 +17,16 @@ Drop Table EAttribute;
 
 Insert Into EAttribute(id, type, t, value) 
 VALUES 
-('testAttribute', 'testObject', '2021-01-01 09:00:00.000', 'testValue');
+('isProcessed', 'item1', '2021-01-01 09:00:00.000', 'true');
 
 Delete From EAttribute;
+
+Insert into EReference(id, sourceType, targetType, t, value)
+VALUES
+('eContents', 'ROOT', 'Item' , '2021-01-01 09:00:00.000', 'item1');
+Delete From EReference;
+
+Select * from EReference where sourceType = 'ROOT' and id='eContents';
 
 ## GET
 

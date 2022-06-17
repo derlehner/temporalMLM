@@ -11,11 +11,13 @@ import java.util.SortedMap;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import edu.uoc.som.temf.core.InternalTObject;
 import edu.uoc.som.temf.core.TGlobalClock;
 import edu.uoc.som.temf.core.TObject;
 import edu.uoc.som.temf.core.TResource;
@@ -58,7 +60,8 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 		System.out.println("GetAt Method for eAttribute called");
 		try {
 		Statement stmt = this.con.createStatement();
-        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "');";
+        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "')"
+        		+ "and type = '" + object.tId() + "' and id = '" + eAttribute.getName() + "';";
         
         ResultSet rs = stmt.executeQuery( sql );
 		rs.next();
@@ -76,21 +79,28 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	
 	protected Object getAt(Instant instant, TObject object, EReference eReference, int index) {
 		System.out.println("GetAt Method for eReference called");
-		/*try {
-		Statement stmt = this.con.createStatement();
-        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "');";
-        
-        ResultSet rs = stmt.executeQuery( sql );
-		rs.next();
-		String value = rs.getString("value");
-        rs.close();
-        stmt.close();
-        
-        return null;
+		// todo: this should consider DummyEObject as main element, and return a reference to the top level elements here
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Select * from EReference where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
+	        
+	        ResultSet rs = stmt.executeQuery( sql );
+			rs.next();
+			while(index > 0) {
+				if(!rs.next()) {
+					throw new IllegalArgumentException("No value at this index");
+				}
+				index--;
+			}
+			String value = rs.getString("value");
+	        rs.close();
+	        stmt.close();
+	        
+	        return getEObject(value);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}*/
-		return object; 
+		}
+		return null; 
 	}
 
 	@Override
@@ -113,7 +123,7 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 		Statement stmt = this.con.createStatement();
         String sql = "Insert Into EAttribute(id, type, t, value) \r\n"
         		+ "VALUES \r\n"
-        		+ "('" + eAttribute.getName() + "', '" + object.getClass().getName() + "', '" + now() + "', '" + value.toString() + "');";
+        		+ "('" + eAttribute.getName() + "', '" + object.tId() + "', '" + now() + "', '" + value.toString() + "');";
         
 			stmt.executeUpdate(sql);
 			stmt.close();
@@ -216,14 +226,29 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	@Override
 	public EObject getEObject(String id) {
 		// TODO how to implement this???
-		/*public EObject getEObject(String id) {
-			if (id == null) {
-				return null;
-			}
-			TObject tObject = loadedEObjects.getUnchecked(id);
+		if (id == null) {
+			return null;
+		}
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Select * from EObject where id = '" + id + "';";
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			String classId = rs.getString("type");
+			stmt.close();
+			EClass eClass = (EClass) Registry.INSTANCE.getEPackage("http://www.example.org/transportationlinemodel").getEClassifier(classId);
+			//EClass eClass = (EClass) Registry.INSTANCE.getEPackage("transportationlinemodel.impl").getEClassifier(id);
+			// code from h2 database: TObject tObject = loadedEObjects.getUnchecked(id);
+			EObject eObject =  EcoreUtil.create(eClass);
+			InternalTObject tObject = TObjectAdapterFactoryImpl.getAdapter(eObject, InternalTObject.class);
+			tObject.tSetId(id);
+			tObject.tSetResource(resource);
 			return tObject;
-		}*/
-		throw new UnsupportedOperationException();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	@Override

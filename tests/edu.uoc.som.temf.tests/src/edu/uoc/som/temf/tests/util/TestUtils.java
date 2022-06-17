@@ -83,7 +83,7 @@ public class TestUtils {
 	 * @return
 	 */
 	public static TResource createTResource(File resourceFile) {
-		return (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile));
+		return (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class TestUtils {
 	 * @return
 	 */
 	public static TResource getTResource(File resourceFile) {
-		return (TResource) new ResourceSetImpl().getResource(TURI.createTMapURI(resourceFile), true);
+		return (TResource) new ResourceSetImpl().getResource(TURI.createTMapURI(resourceFile, "keyvalue"), true);
 	}
 
 	/**

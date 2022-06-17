@@ -9,8 +9,10 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.SortedMap;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,13 +42,14 @@ class TransportationLineModelTests {
 	
 	private static Item i1;
 	
-	@BeforeAll
+	//@BeforeAll
 	static void beforeAll() throws IOException {
 		// Prepare TemporalEMF
 		File resourceFile = File.createTempFile("temf-", null);
 		resourceFile.delete();
 		resourceFile.deleteOnExit();
-		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile));
+		//res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
 		
 		// Prepare model factory
 		modelFactory = TransportationlinemodelFactory.eINSTANCE;
@@ -71,8 +74,26 @@ class TransportationLineModelTests {
 		i1.setName(expectedItemName);
 		a1.getItem().add(i1);
 	}
+	
+	@BeforeAll
+	static void beforeAllTest() throws IOException{
+		// Prepare TemporalEMF
+			File resourceFile = File.createTempFile("temf-", null);
+			resourceFile.delete();
+			resourceFile.deleteOnExit();
+			//res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+			res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+			
+			// Prepare model factory
+			/*modelFactory = TransportationlinemodelFactory.eINSTANCE;
+			i1 = modelFactory.createItem();
+			i1.setName(expectedItemName);
+			System.out.println(i1.eClass().getEPackage());
+			res.getContents().add(i1);*/
+			
+	}
 
-	@Test
+	//@Test
 	void testExampleModelCorrectlyStored() throws IOException {
 		// Arrange
 		
@@ -94,18 +115,21 @@ class TransportationLineModelTests {
 	@Test
 	void testIsProcessed_CorrectlyStored() throws IOException {
 		// Arrange
-		i1.setIsProcessed(false);
+		//i1.setIsProcessed(false);
 		
 		// Act
-		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
+		/*transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
 		Area actualArea = actualSystem.getArea().get(0);
-		Item actualtem = actualArea.getItem().get(0);
+		Item actualItem = actualArea.getItem().get(0);*/
+		//EList<EObject> contents = res.getContents();
+		Item actualItem = (Item) res.getContents().get(0);
 		
 		// Arrange
-		assertEquals(actualtem.isIsProcessed(), false);
+		assertEquals("item1", actualItem.getName());
+		assertEquals(actualItem.isIsProcessed(), true);
 	}
 	
-	@Test
+	//@Test
 	void testIsProcessed_ChangeCorrecltyStored() throws IOException {
 		// Arrange
 		i1.setIsProcessed(false);
@@ -121,7 +145,7 @@ class TransportationLineModelTests {
 		assertEquals(actualtem.isIsProcessed(), true);
 	}
 	
-	@Test
+	//@Test
 	void testIsProcessed_ChangeOldValueStillAvailable() throws IOException,NoSuchFieldException {
 		// Arrange
 		i1.setIsProcessed(false);
@@ -136,11 +160,11 @@ class TransportationLineModelTests {
 		Instant now = TGlobalClock.INSTANCE.instant();
 		
 		EAttribute isProcessed = actualItem.eClass().getEAllAttributes().get(1);
-		SortedMap<Instant, Object> isProcessedValues = actualItem.eGetAllBetween(now, now.minusSeconds(1000), isProcessed);
+		SortedMap<Instant, Object> isProcessedValues = actualItem.eGetAllBetween(now.minusSeconds(1000), now, isProcessed);
 		
 		// Assert
-		assertEquals(isProcessed, "isProcessed");
-		assertTrue(isProcessedValues.size() != 2);
+		assertEquals(isProcessed.getName(), "isProcessed");
+		assertTrue(isProcessedValues.size() >= 2);
 	}
 
 }
