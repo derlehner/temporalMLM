@@ -9,8 +9,11 @@ create table EObject(id TEXT, type TEXT);
 
 Create Table EAttribute(id TEXT, type TEXT, t timestamp, value TEXT);
 
-Create Table EReference(id TEXT, sourceType TEXT, targetType TEXT, t timestamp, value TEXT);
-
+Create Table EReference(id TEXT, source TEXT, target TEXT, t timestamp);
+source -> FK to EObject.id
+target -> FK to EObject.id
+-> if source != root: source must be available
+-> if target is not available, create it
 
 # SET
 

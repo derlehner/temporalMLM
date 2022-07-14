@@ -92,6 +92,10 @@ public class TimescaleTResourceImpl extends ResourceImpl implements TResource {
 		this.tStore = new TimescaleTStoreImpl(con, this); 
 	}
 
+	public void cleanup() {
+		((TimescaleTStoreImpl)this.tStore).cleanup();
+	}
+	
 	@Override
 	public TStore tStore() {
 		return tStore;

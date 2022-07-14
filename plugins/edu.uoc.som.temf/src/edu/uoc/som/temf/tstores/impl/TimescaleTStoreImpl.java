@@ -45,7 +45,6 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	
 	@Override
 	public Object getAt(Instant instant, InternalEObject object, EStructuralFeature feature, int index) {
-		System.out.println("Generic getAt method called");
 		TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
 		if (feature instanceof EAttribute) {
 			return getAt(instant, tObject, (EAttribute) feature, index);
@@ -57,15 +56,18 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	}
 	
 	protected Object getAt(Instant instant, TObject object, EAttribute eAttribute, int index) {
-		System.out.println("GetAt Method for eAttribute called");
+		System.out.println("GetAt Method for eAttribute " + eAttribute.getName() + " called");
 		try {
 		Statement stmt = this.con.createStatement();
-        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "')"
+        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "'"
+        		+ "and type = '" + object.tId() + "' and id = '" + eAttribute.getName() + "')"
         		+ "and type = '" + object.tId() + "' and id = '" + eAttribute.getName() + "';";
         
         ResultSet rs = stmt.executeQuery( sql );
+        System.out.println(sql);
 		rs.next();
 		String value = rs.getString("value");
+		// todo: also add the remaining resultset
         rs.close();
         stmt.close();
         return parseMapValue(eAttribute, value);
@@ -78,21 +80,22 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	
 	protected Object getAt(Instant instant, TObject object, EReference eReference, int index) {
-		System.out.println("GetAt Method for eReference called");
+		System.out.println("GetAt Method for eReference" + eReference.getName() + " called");
 		// todo: this should consider DummyEObject as main element, and return a reference to the top level elements here
 		try {
 			Statement stmt = this.con.createStatement();
-	        String sql = "Select * from EReference where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
+	        String sql = "Select * from ereference;";//where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
 	        
-	        ResultSet rs = stmt.executeQuery( sql );
-			rs.next();
-			while(index > 0) {
+	        ResultSet rs = stmt.executeQuery(sql);
+	        System.out.println("getting element at index " + index);
+			while(index >= 0) {
 				if(!rs.next()) {
-					throw new IllegalArgumentException("No value at this index");
+					return null;//return getEObject(null);//throw new IllegalArgumentException("No value at index " + index);
 				}
 				index--;
 			}
-			String value = rs.getString("value");
+			String value = rs.getString("target");
+			System.out.print(" reference target: " + value);
 	        rs.close();
 	        stmt.close();
 	        
@@ -196,7 +199,8 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 		int count = 0;
 		try {
 			Statement stmt = this.con.createStatement();
-	        String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "');";
+	        //String sql = "Select * from EAttribute where t <= '" + instant.toString() + "' and t >= (select max(t) from EAttribute where t <= '" + instant.toString() + "');";
+			String sql = "Select * from EReference;";
 	        ResultSet rs = stmt.executeQuery( sql );
 	        
 	        while(rs.next()){
@@ -236,6 +240,7 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 			rs.next();
 			String classId = rs.getString("type");
 			stmt.close();
+			//classId = "Item";
 			EClass eClass = (EClass) Registry.INSTANCE.getEPackage("http://www.example.org/transportationlinemodel").getEClassifier(classId);
 			//EClass eClass = (EClass) Registry.INSTANCE.getEPackage("transportationlinemodel.impl").getEClassifier(id);
 			// code from h2 database: TObject tObject = loadedEObjects.getUnchecked(id);
@@ -289,16 +294,65 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	@Override
 	public void add(InternalEObject object, EStructuralFeature feature, int index, Object value) {
+		System.out.println("Generic add Method called");
 		TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
 		if (feature instanceof EAttribute) {
 			//add(tObject, (EAttribute) feature, index, value);
 		} else if (feature instanceof EReference) {
 			TObject referencedEObject = TObjectAdapterFactoryImpl.getAdapter(value, TObject.class);
-			//add(tObject, (EReference) feature, index, referencedEObject);
+			add(tObject, (EReference) feature, index, referencedEObject);
 		} else {
 			throw new IllegalArgumentException(feature.toString());
 		}
 		// throw new UnsupportedOperationException();
+	}
+	
+	private void add(TObject source, EReference feature, int index, TObject target) {
+		System.out.println("Add Method for eReference called");
+		try {
+		Statement stmt = this.con.createStatement();
+        String sql = "Insert Into EReference(id, source, target, t) \r\n"
+        		+ "VALUES \r\n"
+        		+ "('" + feature.getName() + "', '" + source.tId() + "', '" + target.tId() + "', '" + now() + "');";
+        
+			stmt.executeUpdate(sql);
+			stmt.close();
+			if(!isObjectAlreadyPersisted(target)) {
+				addTObject(target);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean isObjectAlreadyPersisted(TObject obj) {
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Select * from EObject where id = '" + obj.tId() + "'";
+	        ResultSet rs = stmt.executeQuery( sql );
+	        if(rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	private void addTObject(TObject obj) {
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Insert Into EObject(id, type) \r\n"
+        		+ "VALUES \r\n"
+        		+ "('" + obj.tId() + "', '" + obj.getClass().getInterfaces()[0].getSimpleName() + "');";
+        
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -427,6 +481,23 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 			return resource.getClock().instant();
 		} else {
 			return TGlobalClock.INSTANCE.instant();
+		}
+	}
+	
+	public void cleanup() {
+		try {
+			Statement stmt = this.con.createStatement();
+	        String sql = "Delete from EAttribute;";
+			stmt.execute(sql);
+			sql = "Delete from EReference where target != 'dummy';";
+			stmt.execute(sql);
+			sql = "Delete from EObject where id != 'dummy' and id != 'ROOT';";
+			stmt.execute(sql);
+			stmt.close();
+			
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 

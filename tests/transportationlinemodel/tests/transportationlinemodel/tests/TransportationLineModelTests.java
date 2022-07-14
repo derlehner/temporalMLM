@@ -99,7 +99,7 @@ class TransportationLineModelTests {
 		// Act
 		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
 		Area actualArea = actualSystem.getArea().get(0);
-		Component actualComponent = actualArea.getComponent().get(0);
+		Component actualComponent = actualArea.getComponent().get(1);
 		Item actualtem = actualArea.getItem().get(0);
 		ItemGenerator actualItemGenerator = actualArea.getItemgenerator();
 		
@@ -115,17 +115,20 @@ class TransportationLineModelTests {
 	void testIsProcessed_CorrectlyStored() throws IOException {
 		// Arrange
 		i1.setIsProcessed(true);
+		EList<EObject> cont = res.getContents();
+		System.out.println(cont.size());
 		
 		// Act
 		/*transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
 		Area actualArea = actualSystem.getArea().get(0);
 		Item actualItem = actualArea.getItem().get(0);*/
 		//EList<EObject> contents = res.getContents();
-		Item actualItem = (Item) res.getContents().get(0);
+		Item actualItem = (Item) res.getContents().get(1);
 		
 		// Arrange
-		assertEquals("item1", actualItem.getName());
+		assertEquals(expectedItemName, actualItem.getName());
 		assertEquals(actualItem.isIsProcessed(), true);
+		((TimescaleTResourceImpl)res).cleanup();
 	}
 	
 	//@Test
