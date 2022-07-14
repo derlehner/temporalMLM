@@ -64,7 +64,6 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
         		+ "and type = '" + object.tId() + "' and id = '" + eAttribute.getName() + "';";
         
         ResultSet rs = stmt.executeQuery( sql );
-        System.out.println(sql);
 		rs.next();
 		String value = rs.getString("value");
 		// todo: also add the remaining resultset
@@ -84,10 +83,9 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 		// todo: this should consider DummyEObject as main element, and return a reference to the top level elements here
 		try {
 			Statement stmt = this.con.createStatement();
-	        String sql = "Select * from ereference;";//where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
+	        String sql = "Select * from ereference where id = '" + eReference.getName() + "' and source = '" + object.tId() + "';";//where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
 	        
 	        ResultSet rs = stmt.executeQuery(sql);
-	        System.out.println("getting element at index " + index);
 			while(index >= 0) {
 				if(!rs.next()) {
 					return null;//return getEObject(null);//throw new IllegalArgumentException("No value at index " + index);
@@ -95,7 +93,7 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 				index--;
 			}
 			String value = rs.getString("target");
-			System.out.print(" reference target: " + value);
+			//System.out.print(" reference target: " + value);
 	        rs.close();
 	        stmt.close();
 	        
@@ -108,7 +106,6 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	@Override
 	public Object set(InternalEObject object, EStructuralFeature feature, int index, Object value) {
-		System.out.println("Generic set method called.");
 		TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
 		if (feature instanceof EAttribute) {
 			return set(tObject, (EAttribute) feature, index, value);
@@ -121,7 +118,7 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	}
 
 	protected Object set(TObject object, EAttribute eAttribute, int index, Object value) {
-		System.out.println("Set Method for eAttribute called");
+		System.out.println("Set Method for eAttribute " + eAttribute.getName() + " called");
 		try {
 		Statement stmt = this.con.createStatement();
         String sql = "Insert Into EAttribute(id, type, t, value) \r\n"
@@ -294,7 +291,6 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 
 	@Override
 	public void add(InternalEObject object, EStructuralFeature feature, int index, Object value) {
-		System.out.println("Generic add Method called");
 		TObject tObject = TObjectAdapterFactoryImpl.getAdapter(object, TObject.class);
 		if (feature instanceof EAttribute) {
 			//add(tObject, (EAttribute) feature, index, value);
@@ -308,7 +304,7 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	}
 	
 	private void add(TObject source, EReference feature, int index, TObject target) {
-		System.out.println("Add Method for eReference called");
+		System.out.println("Add Method for eReference " + feature.getName() + " called");
 		try {
 		Statement stmt = this.con.createStatement();
         String sql = "Insert Into EReference(id, source, target, t) \r\n"
