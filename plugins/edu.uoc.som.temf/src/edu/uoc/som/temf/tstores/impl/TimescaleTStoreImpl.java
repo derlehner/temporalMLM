@@ -86,12 +86,17 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 	        String sql = "Select * from ereference where id = '" + eReference.getName() + "' and source = '" + object.tId() + "';";//where t <= '" + instant.toString() + "' and t >= (select max(t) from EReference where t <= '" + instant.toString() + "');";
 	        
 	        ResultSet rs = stmt.executeQuery(sql);
-			while(index >= 0) {
-				if(!rs.next()) {
-					return null;//return getEObject(null);//throw new IllegalArgumentException("No value at index " + index);
+	        System.out.println("index is at: " + index);
+	        if(eReference.isMany()) {
+				while(index >= 0) {
+					if(!rs.next()) {
+						throw new IllegalArgumentException("No value at index " + index);
+					}
+					index--;
 				}
-				index--;
-			}
+	        }else {
+	        	rs.next();
+	        }
 			String value = rs.getString("target");
 			//System.out.print(" reference target: " + value);
 	        rs.close();
@@ -149,10 +154,29 @@ public class TimescaleTStoreImpl implements SearcheableTStore {
 		return property != null ? EcoreUtil.createFromString(eAttribute.getEAttributeType(), property.toString()) : null;
 	}
 
-	protected Object set(TObject object, EReference eReference, int index, TObject referencedObject) {
+	protected Object set(TObject source, EReference feature, int index, TObject target) {
 		//updateContainment(object, eReference, referencedObject);
 		//updateInstanceOf(referencedObject);
-		throw new UnsupportedOperationException(); // TODO: this must be implemented once relations are supported
+		System.out.println("Add Method for eReference " + feature.getName() + " called");
+		try {
+		Statement stmt = this.con.createStatement();
+        String sql = "Insert Into EReference(id, source, target, t) \r\n"
+        		+ "VALUES \r\n"
+        		+ "('" + feature.getName() + "', '" + source.tId() + "', '" + target.tId() + "', '" + now() + "');";
+        
+			stmt.executeUpdate(sql);
+			stmt.close();
+			if(!isObjectAlreadyPersisted(target)) {
+				addTObject(target);
+			}
+			TObject newSource = source;
+			//newSource.eSet(feature, target);
+			return newSource;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return source;
+		}
+		//throw new UnsupportedOperationException(); // TODO: this must be implemented once relations are supported
 	}
 
 	@Override

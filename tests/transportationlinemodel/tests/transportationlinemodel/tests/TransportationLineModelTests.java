@@ -15,7 +15,12 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.uoc.som.temf.TURI;
@@ -42,14 +47,14 @@ class TransportationLineModelTests {
 	
 	private static Item i1;
 	
-	//@BeforeAll
-	static void beforeAll() throws IOException {
+	@BeforeEach
+	void beforeAll() throws IOException {
 		// Prepare TemporalEMF
 		File resourceFile = File.createTempFile("temf-", null);
 		resourceFile.delete();
 		resourceFile.deleteOnExit();
 		//res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
-		res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
+		TransportationLineModelTests.res = (TResource) new ResourceSetImpl().createResource(TURI.createTMapURI(resourceFile, "keyvalue"));
 		
 		// Prepare model factory
 		modelFactory = TransportationlinemodelFactory.eINSTANCE;
@@ -59,7 +64,7 @@ class TransportationLineModelTests {
 		
 		transportationlinemodel.System system = modelFactory.createSystem();
 		system.setName(expectedSystemName);
-		res.getContents().add(system);
+		TransportationLineModelTests.res.getContents().add(system);
 		
 		Area a1 = modelFactory.createArea();
 		a1.setName(expectedAreaName);
@@ -68,14 +73,20 @@ class TransportationLineModelTests {
 		itemGenerator1.setName(expectedItemGeneratorName);
 		a1.setItemgenerator(itemGenerator1);
 		Component m1 = modelFactory.createComponent();
+		// todo: component dürfte fehler verursachen
 		m1.setName(expectedCopmponentName);
 		a1.getComponent().add(m1);
-		i1 = modelFactory.createItem();
-		i1.setName(expectedItemName);
+		TransportationLineModelTests.i1 = modelFactory.createItem();
+		TransportationLineModelTests.i1.setName(expectedItemName);
 		a1.getItem().add(i1);
 	}
 	
-	@BeforeAll
+	@AfterAll
+	static void cleanup() {
+		((TimescaleTResourceImpl)TransportationLineModelTests.res).cleanup();
+	}
+	
+	//@BeforeAll
 	static void beforeAllTest() throws IOException{
 		// Prepare TemporalEMF
 		File resourceFile = File.createTempFile("temf-", null);
@@ -92,14 +103,14 @@ class TransportationLineModelTests {
 			
 	}
 
-	//@Test
+	@Test
 	void testExampleModelCorrectlyStored() throws IOException {
 		// Arrange
 		
 		// Act
-		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
+		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(1);
 		Area actualArea = actualSystem.getArea().get(0);
-		Component actualComponent = actualArea.getComponent().get(1);
+		Component actualComponent = actualArea.getComponent().get(0);
 		Item actualtem = actualArea.getItem().get(0);
 		ItemGenerator actualItemGenerator = actualArea.getItemgenerator();
 		
@@ -109,9 +120,13 @@ class TransportationLineModelTests {
 		assertEquals(actualComponent.getName(), expectedCopmponentName);		
 		assertEquals(actualtem.getName(), expectedItemName);		
 		assertEquals(actualItemGenerator.getName(), expectedItemGeneratorName);
+		
+		TransportationLineModelTests.cleanup();
 	}
 	
-	@Test
+	
+	// Note: this tests only works with the beforeAllTest() method
+	//@Test
 	void testIsProcessed_CorrectlyStored() throws IOException {
 		// Arrange
 		i1.setIsProcessed(true);
@@ -128,23 +143,24 @@ class TransportationLineModelTests {
 		// Arrange
 		assertEquals(expectedItemName, actualItem.getName());
 		assertEquals(actualItem.isIsProcessed(), true);
-		((TimescaleTResourceImpl)res).cleanup();
 	}
 	
-	//@Test
+	@Test
 	void testIsProcessed_ChangeCorrecltyStored() throws IOException {
 		// Arrange
-		i1.setIsProcessed(false);
-		i1.setIsProcessed(true);
+		TransportationLineModelTests.i1.setIsProcessed(false);
+		TransportationLineModelTests.i1.setIsProcessed(true);
 		
 		// Act
-		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
+		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(1);
 		Area actualArea = actualSystem.getArea().get(0);
 		Item actualtem = actualArea.getItem().get(0);
 		
 		
 		// Assert
 		assertEquals(actualtem.isIsProcessed(), true);
+		
+		cleanup();
 	}
 	
 	//@Test
@@ -154,7 +170,7 @@ class TransportationLineModelTests {
 		i1.setIsProcessed(true);
 		
 		// Act
-		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(0);
+		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(1);
 		Area actualArea = actualSystem.getArea().get(0);
 		Component actualComponent = actualArea.getComponent().get(0);
 		Item actualItem = actualArea.getItem().get(0);
@@ -167,6 +183,8 @@ class TransportationLineModelTests {
 		// Assert
 		assertEquals(isProcessed.getName(), "isProcessed");
 		assertTrue(isProcessedValues.size() >= 2);
+		
+		cleanup();
 	}
 
 }
