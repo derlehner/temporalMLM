@@ -22,6 +22,8 @@
         eOpposite="#//Item/location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="neighbours" upperBound="-1"
         eType="#//Component"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processingTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uncertainty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Item" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProcessed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -30,5 +32,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimConfig">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iterations" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -35,7 +35,7 @@ import transportationlinemodel.ItemGenerator;
 import transportationlinemodel.TransportationlinemodelFactory;
 import transportationlinemodel.impl.SystemImpl;
 
-public class PerformanceTests {
+class PerformanceTests {
 	
 	private static TResource res;
 	private static TransportationlinemodelFactory modelFactory;
@@ -47,8 +47,8 @@ public class PerformanceTests {
 	private static String expectedCopmponentName = "Component 1";
 	
 	
-	@BeforeEach
-	void beforeAll() throws IOException {
+	@BeforeAll
+	public static void beforeAll() throws IOException {
 		// Prepare TemporalEMF
 		File resourceFile = File.createTempFile("temf-", null);
 		resourceFile.delete();
@@ -65,15 +65,15 @@ public class PerformanceTests {
 		
 	}
 	
-	@AfterAll
+	//@AfterAll
 	static void cleanup() {
 		((TimescaleTResourceImpl)PerformanceTests.res).cleanup();
 	}
 	
 	@Test
-	static void testRQ1() {
+	void testRQ1() {
 		// vary iterations from 2 to 40 960
-		for(int iterations = 2; iterations <= 40960; iterations+=2) {
+		for(int iterations = 2; iterations <= 100; iterations+=2) {
 			// setup system 
 			
 			/* For reference, this System is composed
@@ -89,14 +89,45 @@ public class PerformanceTests {
 			ItemGenerator itemGenerator1 = modelFactory.createItemGenerator();
 			itemGenerator1.setName(expectedItemGeneratorName);
 			a1.setItemgenerator(itemGenerator1);
-			Component m1 = modelFactory.createComponent();
-			// todo: component dürfte fehler verursachen
-			m1.setName(expectedCopmponentName);
-			a1.getComponent().add(m1);
-			Item i1 = modelFactory.createItem();
-			i1.setName(expectedItemName);
-			a1.getItem().add(PerformanceTests.i1);
+			
+			Component waitingQueue1 = modelFactory.createComponent();
+			waitingQueue1.setName("waiting queue 1");
+			a1.getComponent().add(waitingQueue1);
+			
+			Component storageQueue1 = modelFactory.createComponent();
+			storageQueue1.setName("storage queue 1");
+			a1.getComponent().add(storageQueue1);
+			
+			Component conveyor1 =  modelFactory.createComponent();
+			conveyor1.setName("conveyor 1");
+			a1.getComponent().add(conveyor1);
+			Component conveyor2 =  modelFactory.createComponent();
+			conveyor2.setName("conveyor 2");
+			a1.getComponent().add(conveyor2);
+			Component conveyor3 =  modelFactory.createComponent();
+			conveyor3.setName("conveyor 3");
+			a1.getComponent().add(conveyor3);
+			
+			Component turnTable1 = modelFactory.createComponent();
+			turnTable1.setName("turntable 1");
+			a1.getComponent().add(turnTable1);
+			Component turnTable2 = modelFactory.createComponent();
+			turnTable2.setName("turntable 2");
+			a1.getComponent().add(turnTable2);
+			Component turnTable3 = modelFactory.createComponent();
+			turnTable3.setName("turntable 3");
+			a1.getComponent().add(turnTable3);
+			Component turnTable4 = modelFactory.createComponent();
+			turnTable1.setName("turntable 4");
+			a1.getComponent().add(turnTable4);
+			
+			Component machine1 = modelFactory.createComponent();
+			machine1.setName("machine 1");
+			a1.getComponent().add(machine1);
+			cleanup();
 		}
+		
+		assertEquals(1, 2-1);
 		
 		// get machine m
 		
@@ -108,7 +139,7 @@ public class PerformanceTests {
 	}
 	
 	@Test
-	static void testRQ2() {
+	void testRQ2() {
 		// vary iterations from 2 to 40 960
 		
 		// Setup System
@@ -120,7 +151,28 @@ public class PerformanceTests {
 	}
 	
 	@Test
-	static void testRQ3() {
+	void testExampleModelCorrectlyStored() throws IOException {
+		// Arrange
+		
+		// Act
+		transportationlinemodel.System actualSystem = (transportationlinemodel.impl.SystemImpl) res.getContents().get(1);
+		Area actualArea = actualSystem.getArea().get(0);
+		Component actualComponent = actualArea.getComponent().get(0);
+		Item actualtem = actualArea.getItem().get(0);
+		ItemGenerator actualItemGenerator = actualArea.getItemgenerator();
+		
+		// Assert
+		assertEquals(actualSystem.getName(), expectedSystemName);
+		assertEquals(actualArea.getName(), expectedAreaName);		
+		assertEquals(actualComponent.getName(), expectedCopmponentName);		
+		assertEquals(actualtem.getName(), expectedItemName);		
+		assertEquals(actualItemGenerator.getName(), expectedItemGeneratorName);
+		
+		TransportationLineModelTests.cleanup();
+	}
+	
+	@Test
+	public static void testRQ3() {
 		// Setup System
 		// vary iterations from 2 to 40 960
 		
